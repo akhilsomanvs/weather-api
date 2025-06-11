@@ -9,13 +9,23 @@ import (
 )
 
 type Config struct {
-	ENV       string    `yaml:"env"`
-	ApiConfig ApiConfig `yaml:"api_config"`
+	ENV        string `yaml:"env"`
+	ApiConfig  `yaml:"api_config"`
+	HttpServer `yaml:"http_server"`
 }
 
 type ApiConfig struct {
 	ApiKey  string `yaml:"API_KEY"`
 	BaseUrl string `yaml:"API_BASE_URL"`
+}
+
+type HttpServer struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
+}
+
+func (cfg *Config) GetHostAddress() string {
+	return (cfg.Host + ":" + cfg.Port)
 }
 
 func MustLoad() *Config {
