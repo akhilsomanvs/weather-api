@@ -12,6 +12,7 @@ type Config struct {
 	ENV        string `yaml:"env"`
 	ApiConfig  `yaml:"api_config"`
 	HttpServer `yaml:"http_server"`
+	Cache      `yaml:"cache"`
 }
 
 type ApiConfig struct {
@@ -24,8 +25,18 @@ type HttpServer struct {
 	Port string `yaml:"port"`
 }
 
+type Cache struct {
+	CacheHost     string `yaml:"host"`
+	CachePort     string `yaml:"port"`
+	CacheDuration int32  `yaml:"duration_in_hours"`
+}
+
 func (cfg *Config) GetHostAddress() string {
 	return (cfg.Host + ":" + cfg.Port)
+}
+
+func (cfg *Config) GetCacheHostAddress() string {
+	return (cfg.CacheHost + ":" + cfg.CachePort)
 }
 
 func MustLoad() *Config {
