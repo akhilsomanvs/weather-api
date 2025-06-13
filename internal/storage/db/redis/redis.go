@@ -2,7 +2,7 @@ package rediscache
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"math/rand"
 	"time"
 
@@ -24,7 +24,8 @@ func InitRedisCache(cfg *config.Config) (*RedisCache, error) {
 
 	_, err := client.Ping(context.Background()).Result()
 	if err != nil {
-		return nil, fmt.Errorf("Could not connect to Cache server : %s", err.Error())
+		log.Printf("Could not connect to Cache server : %s", err.Error())
+		return nil, err
 	}
 	return &RedisCache{
 		Client: client,
@@ -35,7 +36,8 @@ func InitRedisCache(cfg *config.Config) (*RedisCache, error) {
 func (cache *RedisCache) SetData(key string, data any) error {
 	err := cache.Client.Set(context.Background(), key, data, time.Duration(rand.Int31n(cache.Config.CacheDuration))*time.Hour).Err()
 	if err != nil {
-		return fmt.Errorf("Could not store data in cache: %s", err.Error())
+		log.Printf("Could not store data in cache: %s", err.Error())
+		return err
 	}
 	return nil
 }
@@ -43,7 +45,8 @@ func (cache *RedisCache) SetData(key string, data any) error {
 func (cache *RedisCache) GetData(key string) (any, error) {
 	val, err := cache.Client.Get(context.Background(), key).Result()
 	if err != nil {
-		return nil, fmt.Errorf("Could not fetch data from cache: %s", err.Error())
+		log.Printf("Could not fetch data from cache: %s", err.Error())
+		return nil, err
 	}
 
 	return val, nil
