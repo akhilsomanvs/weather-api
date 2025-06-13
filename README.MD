@@ -2,7 +2,7 @@
 
 Weather API created with Golang and uses Redis for Caching
 
-- The project create based on the [requirements](https://roadmap.sh/projects/weather-api-wrapper-service)
+- The project is created based on the [requirements](https://roadmap.sh/projects/weather-api-wrapper-service)
 - The picture below explains the basic requirements of the project.
   <p align="center" width="100%" >
     <img width="100%" src="https://assets.roadmap.sh/guest/weather-api-f8i1q.png" > 
