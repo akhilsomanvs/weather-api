@@ -1,0 +1,11 @@
+env : "dev"
+http_server:
+  host: "localhost"
+  port: "8081"
+api_config:
+  API_KEY: ""
+  API_BASE_URL: ""
+cache:
+  host: "localhost"
+  port: "6379"
+  duration_in_hours: 12
