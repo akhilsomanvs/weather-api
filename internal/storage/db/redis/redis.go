@@ -33,7 +33,7 @@ func InitRedisCache(cfg *config.Config) (*RedisCache, error) {
 	}, nil
 }
 
-func (cache *RedisCache) SetData(key string, data any) error {
+func (cache *RedisCache) SetData(key string, data []byte) error {
 	err := cache.Client.Set(context.Background(), key, data, time.Duration(rand.Int31n(cache.Config.CacheDuration))*time.Hour).Err()
 	if err != nil {
 		log.Printf("Could not store data in cache: %s", err.Error())

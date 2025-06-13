@@ -12,16 +12,20 @@ import (
 
 const weatherApiUrl = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 
-func GetWeatherData(location string, apiKey string) (*models.WeatherApiResponseModel, error) {
-
+func BuildWeatherUrl(location string, apiKey string) (string, error) {
 	apiUrl := fmt.Sprintf("%s/%s/today?key=%s", weatherApiUrl, location, apiKey)
 
 	urlBuilder, err := url.Parse(apiUrl)
 	if err != nil {
-		return nil, errors.New("Could not parse URL : " + err.Error())
+		return "", errors.New("Could not parse URL : " + err.Error())
 	}
 
-	request, err := http.NewRequest("GET", urlBuilder.String(), nil)
+	return urlBuilder.String(), nil
+}
+
+func GetWeatherData(url string) (*models.WeatherApiResponseModel, error) {
+
+	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, errors.New("Error : " + err.Error())
 	}
